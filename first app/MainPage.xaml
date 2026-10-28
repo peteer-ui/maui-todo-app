@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="first_app.MainPage">
+
+    <Grid RowDefinitions="150, 50, *"
+          ColumnDefinitions=".75*, .25*"
+          Padding="10"
+          RowSpacing="10"
+          ColumnSpacing="10">
+
+        <Image Grid.ColumnSpan="2"
+               Source="p.png"/>
+
+        <!-- x:Name lets the C# code read what the user typed -->
+        <Entry x:Name="taskEntry"
+               Placeholder="Enter task"
+               Grid.Row="1"
+               Completed="OnAddClicked"/>
+
+        <!-- Clicked connects the button to a method in MainPage.xaml.cs -->
+        <Button Text="Add"
+                TextColor="White"
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="Black"
+                Clicked="OnAddClicked"/>
+
+        <!-- ItemsSource is set in C# so the list updates when tasks change -->
+        <CollectionView x:Name="tasksView"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="2">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="Red"
+                                           CommandParameter="{Binding .}"
+                                           Invoked="OnDeleteInvoked"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid Padding="0,5">
+                            <Border Padding="10">
+                                <Label Text="{Binding .}"
+                                       FontSize="20"/>
+                            </Border>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+</ContentPage>
